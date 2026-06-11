@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Craft & Carry — Leather Bag Marketplace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:            #0F0F0F;
+      --surface:       #181818;
+      --surface2:      #232323;
+      --surface3:      #2C2C2C;
+      --text:          #F5F5F5;
+      --text-muted:    #B5B5B5;
+      --text-soft:     #6A6A6A;
+      --accent:        #B08D57;
+      --accent-dim:    rgba(176,141,87,0.12);
+      --accent-dimmer: rgba(176,141,87,0.06);
+      --accent-hover:  #C9A96E;
+      --border:        rgba(255,255,255,0.06);
+      --border-strong: rgba(255,255,255,0.11);
+      --border-gold:   rgba(176,141,87,0.28);
+      --radius:        4px;
+      --radius-sm:     3px;
+      --radius-pill:   100px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,10,0.96);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem; font-weight: 400; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text); text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-center { display: flex; gap: 0; }
+    .nav-link {
+      font-size: 0.72rem; font-weight: 400; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-soft);
+      text-decoration: none; padding: 0.4rem 1rem;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--text); }
+    .btn-nav {
+      font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 400;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      background: transparent; color: var(--accent);
+      border: 1px solid var(--border-gold); cursor: pointer;
+      padding: 0.55rem 1.4rem;
+      text-decoration: none; display: inline-block;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .btn-nav:hover {
+      background: var(--accent); color: #0F0F0F; border-color: var(--accent);
+    }
+    .btn-nav:active { opacity: 0.85; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 8rem 2rem 6rem;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 600px;
+      background: radial-gradient(ellipse at center top, rgba(176,141,87,0.055) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.65rem; font-weight: 400; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 2.5rem;
+    }
+    .hero-tag::before,
+    .hero-tag::after {
+      content: ''; display: inline-block;
+      width: 28px; height: 1px; background: var(--accent); opacity: 0.5;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 300; line-height: 1.08; letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 1.5rem; max-width: 780px; margin-left: auto; margin-right: auto;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); font-weight: 300; }
+    .hero-sub {
+      font-size: 0.9rem; font-weight: 300; letter-spacing: 0.04em;
+      color: var(--text-soft); line-height: 1.9;
+      max-width: 420px; margin: 0 auto 3.5rem;
+    }
+    .hero-search-wrap {
+      display: flex; gap: 0; max-width: 420px; margin: 0 auto;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+    }
+    .hero-search-wrap input {
+      flex: 1; border: none; background: transparent;
+      font-family: 'Jost', sans-serif; font-size: 0.82rem;
+      font-weight: 300; letter-spacing: 0.06em;
+      color: var(--text); outline: none;
+      padding: 0.85rem 1.25rem;
+    }
+    .hero-search-wrap input::placeholder { color: var(--text-soft); }
+    .btn-search {
+      background: var(--accent); color: #0F0F0F; border: none; cursor: pointer;
+      font-family: 'Jost', sans-serif; font-size: 0.7rem; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.85rem 1.5rem; transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .btn-search:hover { background: var(--accent-hover); }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      max-width: 860px; margin: 5rem auto 0;
+      display: flex; justify-content: center;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+    .trust-item {
+      flex: 1; max-width: 220px;
+      text-align: center; padding: 0 2rem;
+      border-right: 1px solid var(--border);
+    }
+    .trust-item:last-child { border-right: none; }
+    .trust-icon {
+      font-size: 1.1rem; margin-bottom: 0.5rem; display: block;
+      opacity: 0.7;
+    }
+    .trust-text {
+      font-size: 0.72rem; font-weight: 300; letter-spacing: 0.06em;
+      color: var(--text-soft); line-height: 1.5;
+    }
+
+    /* ── FILTERS ── */
+    .filters-section {
+      max-width: 1280px; margin: 4rem auto 0; padding: 0 2.5rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .filter-chips { display: flex; gap: 0; flex-wrap: wrap; align-items: center; }
+    .filter-label {
+      font-size: 0.65rem; font-weight: 400; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--text-soft); margin-right: 1.25rem;
+    }
+    .chip {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.7rem; font-weight: 400; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.1rem; cursor: pointer;
+      border: none; border-right: 1px solid var(--border);
+      background: transparent; color: var(--text-soft);
+      transition: color 0.2s, background 0.2s;
+    }
+    .chip:first-of-type { border-left: 1px solid var(--border); }
+    .chip:hover { color: var(--accent); }
+    .chip.active { color: var(--accent); background: var(--accent-dimmer); }
+    .sort-wrap { display: flex; align-items: center; gap: 0.75rem; }
+    .sort-label {
+      font-size: 0.65rem; font-weight: 400; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-soft);
+    }
+    .sort-select {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem; font-weight: 300; letter-spacing: 0.06em;
+      border: 1px solid var(--border-strong);
+      background: var(--surface); color: var(--text-muted);
+      padding: 0.45rem 0.85rem; cursor: pointer; outline: none;
+      -webkit-appearance: none; appearance: none;
+    }
+    .sort-select option { background: var(--surface2); }
+
+    /* ── GRID ── */
+    .products-section { max-width: 1280px; margin: 0 auto; padding: 2.5rem 2.5rem 8rem; }
+    .grid-meta { display: flex; align-items: baseline; margin-bottom: 2rem; }
+    .grid-count {
+      font-size: 0.68rem; font-weight: 300; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-soft);
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--surface);
+      overflow: hidden;
+      transition: background 0.25s;
+      cursor: pointer;
+      display: flex; flex-direction: column;
+    }
+    .card:hover { background: var(--surface2); }
+
+    /* Image */
+    .card-img-wrap {
+      position: relative; width: 100%; aspect-ratio: 4/5; overflow: hidden;
+      background: var(--surface2);
+    }
+    .card-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.6s cubic-bezier(.25,.46,.45,.94), filter 0.4s;
+      filter: brightness(0.96);
+    }
+    .card:hover .card-img-wrap img {
+      transform: scale(1.04); filter: brightness(1);
+    }
+
+    .card-wishlist {
+      position: absolute; top: 14px; right: 14px;
+      width: 32px; height: 32px;
+      background: rgba(15,15,15,0.7); backdrop-filter: blur(8px);
+      border: 1px solid var(--border-strong);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; cursor: pointer; color: var(--text-soft);
+      transition: color 0.2s, border-color 0.2s, background 0.2s; z-index: 2;
+    }
+    .card-wishlist:hover { color: var(--accent); border-color: var(--border-gold); background: rgba(15,15,15,0.9); }
+    .card-wishlist.liked { color: var(--accent); border-color: var(--border-gold); }
+
+    /* Body */
+    .card-body {
+      padding: 1.5rem 1.5rem 1.75rem;
+      flex: 1; display: flex; flex-direction: column;
+      border-top: 1px solid var(--border);
+    }
+    .card-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 0.7rem;
+    }
+    .card-category {
+      font-size: 0.62rem; font-weight: 400; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--text-soft);
+    }
+    .badge {
+      font-size: 0.6rem; font-weight: 400; letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.65rem; border: 1px solid;
+    }
+    .badge-new     { border-color: rgba(176,141,87,0.4); color: var(--accent); }
+    .badge-hot     { border-color: rgba(176,141,87,0.4); color: var(--accent); }
+    .badge-sale    { border-color: rgba(255,255,255,0.15); color: var(--text-muted); }
+    .badge-limited { border-color: rgba(255,255,255,0.1); color: var(--text-soft); }
+
+    .card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; font-weight: 400; line-height: 1.3;
+      letter-spacing: 0.01em; color: var(--text);
+      margin-bottom: 0.6rem;
+    }
+    .card-desc {
+      font-size: 0.8rem; font-weight: 300; letter-spacing: 0.02em;
+      color: var(--text-soft); line-height: 1.75;
+      flex: 1; margin-bottom: 1.25rem;
+    }
+    .card-detail {
+      display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.25rem;
+    }
+    .detail-tag {
+      font-size: 0.62rem; font-weight: 300; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.65rem;
+      border: 1px solid var(--border-strong);
+      color: var(--text-soft); background: transparent;
+    }
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 1.1rem; border-top: 1px solid var(--border);
+    }
+    .price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 400; letter-spacing: 0.02em;
+      color: var(--text);
+    }
+    .price-original {
+      font-size: 0.75rem; font-weight: 300;
+      color: var(--text-soft); text-decoration: line-through; margin-left: 0.5rem;
+    }
+    .btn-card {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.65rem; font-weight: 400; letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.55rem 1.1rem; cursor: pointer;
+      border: 1px solid var(--border-strong);
+      background: transparent; color: var(--text-muted);
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    .btn-card:hover {
+      border-color: var(--accent); color: var(--accent);
+      background: var(--accent-dimmer);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #080808;
+      border-top: 1px solid var(--border);
+      text-align: center; padding: 3rem 2rem;
+      font-size: 0.68rem; font-weight: 300;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-soft);
+    }
+    footer strong { color: var(--text-muted); font-weight: 400; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-soft); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      nav { padding: 0 1.5rem; }
+      .nav-center { display: none; }
+      .hero { padding: 5rem 1.5rem 3.5rem; }
+      .filters-section, .products-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .trust-bar { flex-wrap: wrap; gap: 0; }
+      .trust-item { flex: none; width: 50%; border-right: none; border-bottom: 1px solid var(--border); padding: 1.25rem 1rem; }
+      .trust-item:nth-child(odd) { border-right: 1px solid var(--border); }
+      .trust-item:last-child, .trust-item:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    }
+    @media (max-width: 400px) { .products-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">craft<span>&</span>carry</a>
+  <div class="nav-center">
+    <a href="#" class="nav-link">New Arrivals</a>
+    <a href="#" class="nav-link">Collections</a>
+    <a href="#" class="nav-link">Sale</a>
+  </div>
+  <a href="add-product.html" class="btn-nav">+ List a Bag</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Handcrafted Leather Goods</div>
+  <h1>Carry Something <em>Beautiful</em></h1>
+  <p class="hero-sub">Discover premium leather bags from independent makers — full-grain hides, artisan craftsmanship, built to last a lifetime.</p>
+  <div class="hero-search-wrap">
+    <input type="text" placeholder="Search bags, styles, colours…" id="searchInput" />
+    <button class="btn-search" onclick="filterProducts()">Search</button>
+  </div>
+
+  <div class="trust-bar">
+    <div class="trust-item">
+      <span class="trust-icon">🐂</span>
+      <span class="trust-text">Full-grain leather only</span>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">🧵</span>
+      <span class="trust-text">Handstitched construction</span>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">📦</span>
+      <span class="trust-text">Free shipping over €150</span>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">♾️</span>
+      <span class="trust-text">Lifetime quality guarantee</span>
+    </div>
+  </div>
+</section>
+
+<!-- FILTERS -->
+<div class="filters-section">
+  <div class="filter-chips">
+    <span class="filter-label">Type:</span>
+    <button class="chip active" onclick="setFilter('all', this)">All</button>
+    <button class="chip" onclick="setFilter('tote', this)">Tote</button>
+    <button class="chip" onclick="setFilter('crossbody', this)">Crossbody</button>
+    <button class="chip" onclick="setFilter('clutch', this)">Clutch</button>
+    <button class="chip" onclick="setFilter('shoulder', this)">Shoulder</button>
+    <button class="chip" onclick="setFilter('handbag', this)">Handbag</button>
+  </div>
+  <div class="sort-wrap">
+    <span class="sort-label">Sort:</span>
+    <select class="sort-select" onchange="sortProducts(this.value)">
+      <option value="default">Featured</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
+      <option value="name">Name A–Z</option>
+    </select>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products-section">
+  <div class="grid-meta">
+    <span class="grid-count" id="productCount">7 bags available</span>
+  </div>
+  <div class="products-grid" id="productGrid"></div>
+</section>
+
+<footer>
+  <strong>craft&carry.</strong> &nbsp;·&nbsp; Leather Bag Marketplace &nbsp;·&nbsp; &copy; 2025 All rights reserved
+</footer>
+
+<script>
+  const products = [
+    {
+      name: "Milan Structured Tote",
+      category: "tote",
+      desc: "Spacious full-grain Italian leather tote with a rigid base and magnetic closure. Two interior slip pockets and a zip compartment. Ages beautifully with a rich patina.",
+      price: 249.00,
+      originalPrice: null,
+      badge: "hot",
+      badgeLabel: "Bestseller",
+      details: ["Tan", "Full-grain", "38 × 28 cm"],
+      img: "https://cdn.aboutstatic.com/file/images/edf29d8c5a66555729421891ca53a2ef.jpg?brightness=0.96&quality=75&trim=1&height=1067&width=800"
+    },
+    {
+      name: "Florence Crossbody",
+      category: "crossbody",
+      desc: "Compact yet practical crossbody in pebbled leather. Adjustable strap, front zip pocket, and antique brass hardware. Perfect for everyday city use.",
+      price: 159.00,
+      originalPrice: 199.00,
+      badge: "sale",
+      badgeLabel: "Sale",
+      details: ["Cognac", "Pebbled leather", "22 × 16 cm"],
+      img: "https://cdn.aboutstatic.com/file/images/c3de2eae232ce2bab5a2ff0e369562dc.jpg?brightness=0.96&quality=75&trim=1&height=1067&width=800"
+    },
+    {
+      name: "Venice Shoulder Bag",
+      category: "shoulder",
+      desc: "Soft buttery leather shoulder bag with a slouchy silhouette. Wide strap, interior organiser pockets, and a secure zip top. Timeless and elegant.",
+      price: 189.00,
+      originalPrice: null,
+      badge: "new",
+      badgeLabel: "New",
+      details: ["Black", "Nappa leather", "30 × 22 cm"],
+      img: "https://cdn.aboutstatic.com/file/images/387a30eed6ee0993a6464c14ac861b69.png?bg=F4F4F5&quality=75&trim=1&height=1067&width=800"
+    },
+    {
+      name: "Roma Tote Bag",
+      category: "tote",
+      desc: "Refined structured tote in smooth vegetable-tanned leather. Features a spacious main compartment, interior zip pocket, and sturdy top handles. Clean minimal lines that pair with any outfit.",
+      price: 89.00,
+      originalPrice: null,
+      badge: "limited",
+      badgeLabel: "Limited",
+      details: ["Burgundy", "Veg-tanned", "34 × 26 cm"],
+      img: "https://cdn.aboutstatic.com/file/images/6fd4f53e26a4c2ab4154ee0971cf7f21.png?bg=F4F4F5&quality=75&trim=1&height=1067&width=800"
+    },
+    {
+      name: "Siena Handbag",
+      category: "handbag",
+      desc: "Elegant top-handle handbag crafted from full-grain leather with a polished silhouette. Structured body, gold-tone hardware, and a detachable shoulder strap for versatile carrying. Fully lined interior with slip and zip pockets.",
+      price: 329.00,
+      originalPrice: null,
+      badge: "new",
+      badgeLabel: "New",
+      details: ["Dark Brown", "Full-grain", "28 × 20 cm"],
+      img: "https://cdn.aboutstatic.com/file/images/9a262f6fb008a47ccdd6a5e8b9cedd71.png?bg=F4F4F5&quality=75&trim=1&height=1067&width=800"
+    },
+    {
+      name: "Capri Chain Crossbody",
+      category: "crossbody",
+      desc: "Luxe mini bag with a detachable gold chain strap and flap-over closure. Quilted leather exterior, suede-lined interior. Transition effortlessly from day to night.",
+      price: 219.00,
+      originalPrice: 269.00,
+      badge: "sale",
+      badgeLabel: "Sale",
+      details: ["Camel", "Quilted leather", "18 × 14 cm"],
+      img: "https://cdn.aboutstatic.com/file/7edfaba844769bead8890e98ad32f25c?bg=F4F4F5&quality=75&trim=1&height=1067&width=800"
+    },
+    {
+      name: "Amalfi Oversized Tote",
+      category: "tote",
+      desc: "Market-to-meeting tote in supple washed leather. Open top with interior zip pouch, contrast stitching, and a flat base. Effortlessly fits everything you need.",
+      price: 199.00,
+      originalPrice: null,
+      badge: "hot",
+      badgeLabel: "Trending",
+      details: ["Natural Tan", "Washed leather", "44 × 32 cm"],
+      img: "https://cdn.aboutstatic.com/file/images/0b1f9dd56390d6ae96e5a361da3070ad.jpg?brightness=0.96&quality=75&trim=1&height=1067&width=800"
+    }
+  ];
+
+
+
+  const GOOGLE_SHEETS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSmVNbSk8gcK_4u8mBoVShnUqZRP0sQt33IZ8k3KK_ZYl2HZwBhBWLbitTM02UBZZt-hYDF5KmkdtfF/pub?gid=0&single=true&output=csv";
+
+  function parseCSV(text) {
+    const rows = [];
+    let row = [];
+    let value = '';
+    let inQuotes = false;
+
+    for (let i = 0; i < text.length; i++) {
+      const char = text[i];
+      const next = text[i + 1];
+
+      if (char === '"' && inQuotes && next === '"') {
+        value += '"';
+        i++;
+      } else if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === ',' && !inQuotes) {
+        row.push(value);
+        value = '';
+      } else if ((char === '\n' || char === '\r') && !inQuotes) {
+        if (char === '\r' && next === '\n') i++;
+        row.push(value);
+        if (row.some(cell => cell.trim() !== '')) rows.push(row);
+        row = [];
+        value = '';
+      } else {
+        value += char;
+      }
+    }
+
+    row.push(value);
+    if (row.some(cell => cell.trim() !== '')) rows.push(row);
+    return rows;
+  }
+
+  function normalizePrice(value) {
+    if (!value) return null;
+    const cleaned = String(value).replace('€', '').replace(',', '.').trim();
+    const number = parseFloat(cleaned);
+    return Number.isFinite(number) ? number : null;
+  }
+
+  function labelForBadge(badge) {
+    const key = String(badge || 'new').toLowerCase().trim();
+    return {
+      new: 'New',
+      hot: 'Bestseller',
+      sale: 'Sale',
+      limited: 'Limited'
+    }[key] || key.charAt(0).toUpperCase() + key.slice(1);
+  }
+
+  async function loadGoogleSheetProducts() {
+    try {
+      const response = await fetch(GOOGLE_SHEETS_CSV_URL + '&cachebust=' + Date.now());
+      const csvText = await response.text();
+      const rows = parseCSV(csvText);
+      if (rows.length < 2) return;
+
+      const headers = rows[0].map(h => h.trim().toLowerCase());
+      const sheetProducts = rows.slice(1).map(row => {
+        const item = {};
+        headers.forEach((header, index) => {
+          item[header] = (row[index] || '').trim();
+        });
+
+        const price = normalizePrice(item.price);
+        if (!item.name || !price || !item.img1) return null;
+
+        const badge = (item.badge || 'new').toLowerCase().trim();
+        return {
+          name: item.name,
+          category: (item.category || 'handbag').toLowerCase().trim(),
+          desc: item.desc || 'Submitted leather bag listing from Craft & Carry.',
+          price: price,
+          originalPrice: normalizePrice(item.originalprice),
+          badge: badge,
+          badgeLabel: labelForBadge(badge),
+          details: ['New listing', (item.category || 'Leather').trim(), 'Marketplace'],
+          img: item.img1
+        };
+      }).filter(Boolean);
+
+      products.push(...sheetProducts);
+      renderProducts();
+    } catch (error) {
+      console.warn('Google Sheets products could not be loaded:', error);
+      renderProducts();
+    }
+  }
+
+  let currentFilter = 'all';
+  let currentSort = 'default';
+  let searchTerm = '';
+  const liked = new Set();
+
+  function getBadgeClass(b) {
+    return { new: 'badge-new', hot: 'badge-hot', sale: 'badge-sale', limited: 'badge-limited' }[b] || 'badge-new';
+  }
+
+  function toggleLike(idx) {
+    if (liked.has(idx)) liked.delete(idx); else liked.add(idx);
+    const btn = document.querySelector(`[data-card="${idx}"] .card-wishlist`);
+    if (btn) { btn.classList.toggle('liked', liked.has(idx)); btn.textContent = liked.has(idx) ? '♥' : '♡'; }
+  }
+
+  function renderProducts() {
+    let filtered = products.map((p, i) => ({ ...p, _i: i })).filter(p => {
+      const matchCat = currentFilter === 'all' || p.category === currentFilter;
+      const matchSearch = p.name.toLowerCase().includes(searchTerm) || p.desc.toLowerCase().includes(searchTerm);
+      return matchCat && matchSearch;
+    });
+
+    if (currentSort === 'price-asc') filtered.sort((a, b) => a.price - b.price);
+    else if (currentSort === 'price-desc') filtered.sort((a, b) => b.price - a.price);
+    else if (currentSort === 'name') filtered.sort((a, b) => a.name.localeCompare(b.name));
+
+    document.getElementById('productCount').textContent = filtered.length + (filtered.length === 1 ? ' bag available' : ' bags available');
+
+    document.getElementById('productGrid').innerHTML = filtered.map(p => `
+      <div class="card" data-card="${p._i}">
+        <div class="card-img-wrap">
+          <img src="${p.img}" alt="${p.name}" loading="lazy" />
+          <button class="card-wishlist ${liked.has(p._i) ? 'liked' : ''}"
+            onclick="event.stopPropagation(); toggleLike(${p._i})">${liked.has(p._i) ? '♥' : '♡'}</button>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="card-category">${p.category}</span>
+            <span class="badge ${getBadgeClass(p.badge)}">${p.badgeLabel}</span>
+          </div>
+          <h3>${p.name}</h3>
+          <p class="card-desc">${p.desc}</p>
+          <div class="card-detail">
+            ${p.details.map(d => `<span class="detail-tag">${d}</span>`).join('')}
+          </div>
+          <div class="card-footer">
+            <div>
+              <span class="price">€${p.price.toFixed(2)}</span>
+              ${p.originalPrice ? `<span class="price-original">€${p.originalPrice.toFixed(2)}</span>` : ''}
+            </div>
+            <button class="btn-card">View Details →</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function setFilter(cat, btn) {
+    currentFilter = cat;
+    document.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderProducts();
+  }
+
+  function sortProducts(val) { currentSort = val; renderProducts(); }
+
+  function filterProducts() {
+    searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+    renderProducts();
+  }
+
+  document.getElementById('searchInput').addEventListener('keyup', e => {
+    if (e.key === 'Enter') filterProducts();
+  });
+
+  renderProducts();
+  loadGoogleSheetProducts();
+</script>
+</body>
+</html>
